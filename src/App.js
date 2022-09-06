@@ -12,8 +12,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeLeftSec: 30,
-      totalTimeSec: 30,
+      timeLeftSec: 12,
+      totalTimeSec: 500,
       timerRunning: false,
       selectedWords: [],
       isDragging: false,
@@ -36,25 +36,41 @@ class App extends Component {
   async runTimer() {
     console.log("Running timer? " + this.state.timerRunning);
     console.log("Time left: " + this.state.timeLeftSec);
-    var interval = setInterval(() => {
-      console.log("In setTimeout");
-      if (this.state.timerRunning) {
-        this.setState({ timeLeftSec: this.state.timeLeftSec - 1 }, () => {
-          console.log("Time left: " + this.state.timeLeftSec);
-        });
-      }
-      if (!this.state.timerRunning | (this.state.timeLeftSec == 0)) {
-        clearInterval(interval);
-        this.setState({ timerRunning: false });
-      }
-    }, 1000);
+    if (this.state.timerRunning) {
+      var interval = setInterval(() => {
+        console.log("In setTimeout");
+        if (this.state.timerRunning) {
+          this.setState({ timeLeftSec: this.state.timeLeftSec - 1 }, () => {
+            console.log("Time left: " + this.state.timeLeftSec);
+          });
+        }
+        if (!this.state.timerRunning | (this.state.timeLeftSec == 0)) {
+          clearInterval(interval);
+          this.setState({ timerRunning: false });
+        }
+      }, 1000);
+    }
   }
 
-  resetTimer = () => {};
+  resetTimer = () => {
+    this.setState({ timeLeftSec: this.state.totalTimeSec });
+  };
 
   setTotalTime = () => {};
 
   updateTimeLeft = () => {};
+
+  secondsToHms = (secs) => {
+    secs = Number(secs);
+    var h = Math.floor(secs / 3600);
+    var m = Math.floor((secs % 3600) / 60);
+    var s = Math.floor((secs % 3600) % 60);
+
+    var hDisplay = h > 0 ? h + ":" : "";
+    var mDisplay = m > 0 ? m + ":" : "";
+    var sDisplay = m > 0 ? String(s).padStart(2, "0") : s;
+    return hDisplay + mDisplay + sDisplay;
+  };
 
   changeNumWords = (diff) => {
     var totalNumWords = 0;
@@ -163,6 +179,8 @@ class App extends Component {
   };
 
   render() {
+    const percentage = (this.state.timeLeftSec / this.state.totalTimeSec) * 100;
+    const timeDisplay = this.secondsToHms(this.state.timeLeftSec);
     return (
       <div className="App">
         <div className="h-full bg-indigo-100 p-8">
@@ -174,15 +192,21 @@ class App extends Component {
               <div>
                 <div className="h-96 w-96 m-auto">
                   <div className="flex flex-row space-around align-center justify-center h-full w-full">
-                    <div className="pie relative w-full h-full rounded-full border-4 border-red-700">
-                      <div className="absolute left-0 w-1/2 h-full rounded-l-full origin-right bg-red-700"></div>
+                    <div className="pie relative w-full h-full rounded-full bg-red-300 border-2 border-red-700">
                       <div
-                        className="absolute left-0 w-1/2 h-full rounded-l-full origin-right bg-white"
+                        className="ticker absolute left-0 w-1/2 h-full rounded-l-full origin-right bg-red-700"
                         style={{
-                          transform: `rotate(-${
-                            (this.state.timeLeftSec / this.state.totalTimeSec) *
-                            100
-                          }deg)`,
+                          transform: `rotate(${-3.6 * percentage + 180}deg)`,
+                          zIndex: 0,
+                        }}
+                      ></div>
+                      <div
+                        className="mask absolute left-0 w-1/2 h-full rounded-l-full origin-right bg-red-700"
+                        style={{
+                          backgroundColor: `${
+                            percentage > 50 ? "" : "#fca5a5"
+                          }`,
+                          transform: `rotate(-${percentage > 50 ? 0 : 180}deg)`,
                           zIndex: 1,
                         }}
                       ></div>
@@ -190,7 +214,7 @@ class App extends Component {
                   </div>
                 </div>
                 <div className="flex flex-row space-around align-center justify-center">
-                  {this.state.timeLeftSec}
+                  {timeDisplay}
                 </div>
                 <div className="flex flex-row space-around align-center justify-center">
                   custom time selector
@@ -216,9 +240,17 @@ class App extends Component {
                 <div className="flex flex-row space-around align-center justify-center">
                   <button
                     className="button bg-blue-100 p-2 m-4 rounded-md text-blue-900 font-bold border border-blue-300"
-                    onClick={() => this.toggleTimer(this.state.timerRunning)}
+                    onClick={() =>
+                      this.state.timeLeftSec == 0
+                        ? this.resetTimer()
+                        : this.toggleTimer(this.state.timerRunning)
+                    }
                   >
-                    {this.state.timerRunning ? "Pause" : "Start"}
+                    {this.state.timerRunning
+                      ? "Pause"
+                      : this.state.timeLeftSec == 0
+                      ? "Reset"
+                      : "Start"}
                   </button>
                 </div>
               </div>
