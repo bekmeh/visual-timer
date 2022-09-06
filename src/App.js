@@ -70,7 +70,13 @@ class App extends Component {
 
     var hDisplay = h > 0 ? h + ":" : "";
     var mDisplay =
-      h > 0 ? (m > 0 ? String(m).padStart(2, "0") + ":" : "") : m + ":";
+      h > 0
+        ? m > 0
+          ? String(m).padStart(2, "0") + ":"
+          : ""
+        : m > 0
+        ? m + ":"
+        : "";
     var sDisplay = m > 0 ? String(s).padStart(2, "0") : s;
     return hDisplay + mDisplay + sDisplay;
   };
@@ -234,9 +240,6 @@ class App extends Component {
               </div>
 
               <div>
-                <div className="flex flex-row space-around align-center justify-center">
-                  countdown pie (start from full circle)
-                </div>
                 <div className="flex flex-row space-around align-center justify-center">
                   <button
                     className="button bg-blue-100 p-2 m-4 rounded-md text-blue-900 font-bold border border-blue-300"
