@@ -56,7 +56,9 @@ class App extends Component {
     this.setState({ timeLeftSec: this.state.totalTimeSec });
   };
 
-  setTotalTime = () => {};
+  setTotalTime = (seconds) => {
+    this.setState({ totalTimeSec: seconds, timeLeftSec: seconds });
+  };
 
   updateTimeLeft = () => {};
 
@@ -67,7 +69,8 @@ class App extends Component {
     var s = Math.floor((secs % 3600) % 60);
 
     var hDisplay = h > 0 ? h + ":" : "";
-    var mDisplay = m > 0 ? m + ":" : "";
+    var mDisplay =
+      h > 0 ? (m > 0 ? String(m).padStart(2, "0") + ":" : "") : m + ":";
     var sDisplay = m > 0 ? String(s).padStart(2, "0") : s;
     return hDisplay + mDisplay + sDisplay;
   };
@@ -228,9 +231,6 @@ class App extends Component {
                 <div className="flex flex-row space-around align-center justify-center">
                   option: colour buttons
                 </div>
-                <div className="flex flex-row space-around align-center justify-center">
-                  option: time preset buttons (default and custom)
-                </div>
               </div>
 
               <div>
@@ -251,6 +251,50 @@ class App extends Component {
                       : this.state.timeLeftSec == 0
                       ? "Reset"
                       : "Start"}
+                  </button>
+                </div>
+                <div className="flex flex-row space-around align-center justify-center">
+                  <button
+                    className="m-1 p-3 rounded-md bg-blue-300 font-bold"
+                    onClick={() => this.setTotalTime(300)}
+                  >
+                    5 min
+                  </button>
+                  <button
+                    className="m-1 p-3 rounded-md bg-blue-300 font-bold"
+                    onClick={() => this.setTotalTime(600)}
+                  >
+                    10 min
+                  </button>
+                  <button
+                    className="m-1 p-3 rounded-md bg-blue-300 font-bold"
+                    onClick={() => this.setTotalTime(900)}
+                  >
+                    15 min
+                  </button>
+                  <button
+                    className="m-1 p-3 rounded-md bg-blue-300 font-bold"
+                    onClick={() => this.setTotalTime(1200)}
+                  >
+                    20 min
+                  </button>
+                  <button
+                    className="m-1 p-3 rounded-md bg-blue-300 font-bold"
+                    onClick={() => this.setTotalTime(1800)}
+                  >
+                    30 min
+                  </button>
+                  <button
+                    className="m-1 p-3 rounded-md bg-blue-300 font-bold"
+                    onClick={() => this.setTotalTime(2100)}
+                  >
+                    45 min
+                  </button>
+                  <button
+                    className="m-1 p-3 rounded-md bg-blue-300 font-bold"
+                    onClick={() => this.setTotalTime(3600)}
+                  >
+                    1 hour
                   </button>
                 </div>
               </div>
