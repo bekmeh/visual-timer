@@ -267,11 +267,11 @@ class App extends Component {
           {/* </div> */}
           <div
             className="mx-auto"
-            onClick={() =>
-              this.state.timeLeftSec == 0
-                ? this.resetTimer()
-                : this.toggleTimer(this.state.timerRunning)
-            }
+            // onClick={() =>
+            //   this.state.timeLeftSec == 0
+            //     ? this.resetTimer()
+            //     : this.toggleTimer(this.state.timerRunning)
+            // }
           >
             <div className="flex flex-row space-around align-center justify-center mx-auto">
               <div
@@ -295,10 +295,16 @@ class App extends Component {
                     zIndex: 1,
                   }}
                 ></div>
+                <div
+                  className="absolute w-full z-10 text-white font-thin opacity-60"
+                  style={{
+                    fontSize: "min(5em, 10vmin)",
+                    top: "calc(50% - 0.5em)",
+                  }}
+                >
+                  {timeDisplay}
+                </div>
               </div>
-            </div>
-            <div className="flex flex-row space-around align-center justify-center">
-              {timeDisplay}
             </div>
             {/* <div className="flex flex-row space-around align-center justify-center">
                   custom time selector
@@ -317,7 +323,7 @@ class App extends Component {
           <div className="w-full h-full">
             <div className="flex flex-row space-around align-center justify-center">
               <button
-                className="button bg-blue-100 p-2 m-4 rounded-md text-blue-900 font-bold border border-blue-300"
+                className="button cursor-pointer bg-blue-100 p-2 m-4 rounded-md text-blue-900 font-bold border border-blue-300"
                 onClick={() => this.toggleTimer(this.state.timerRunning)}
               >
                 {this.state.timerRunning ? "Pause" : "Start"}
