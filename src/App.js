@@ -215,7 +215,7 @@ class App extends Component {
         <div className="bg-indigo-100 p-8">
           <h1 className="text-indigo-900 title-font text-2xl">Visual Timer</h1>
         </div>
-        <section className="container text-gray-600 body-font my-5 mx-auto">
+        <section className="container text-gray-600 body-font my-10 mx-auto">
           {/* <div className="h-96 w-96 m-auto"> */}
           {/* <div className="flex flex-row space-around align-center justify-center h-full w-full">
                   <div className="pie relative w-full h-full rounded-full bg-red-300 border-2 border-red-700">
@@ -266,20 +266,82 @@ class App extends Component {
                 </div> */}
           {/* </div> */}
           <div
-            className="mx-auto"
-            // onClick={() =>
-            //   this.state.timeLeftSec == 0
-            //     ? this.resetTimer()
-            //     : this.toggleTimer(this.state.timerRunning)
-            // }
+            className="mx-auto my-5 cursor-pointer"
+            onClick={() =>
+              this.state.timeLeftSec == 0
+                ? this.resetTimer()
+                : this.toggleTimer(this.state.timerRunning)
+            }
           >
-            <div className="flex flex-row space-around align-center justify-center mx-auto">
+            <div className="flex flex-row justify-center mx-auto">
               <div
                 className="pie relative rounded-full bg-red-300 border-2 border-red-700 w-3/4 max-w-md max-h-md h-0"
                 style={{
                   paddingBottom: "min(75%, 28rem)",
                 }}
               >
+                <div
+                  className="absolute indicators absolute left-1/2 -top-4 h-80"
+                  style={{
+                    zIndex: -99,
+                  }}
+                >
+                  <div
+                    className="w-0.5 bg-red-500"
+                    style={{
+                      height: "150%",
+                    }}
+                  ></div>
+                  <div
+                    className="absolute top-0 w-0.5 bg-red-500 origin-center"
+                    style={{
+                      height: "150%",
+                      transform: "rotate(90deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="absolute top-0 w-0.5 bg-red-500 origin-center"
+                    style={{
+                      height: "150%",
+                      transform: "rotate(45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="absolute top-0 w-0.5 bg-red-500 origin-center"
+                    style={{
+                      height: "150%",
+                      transform: "rotate(-45deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="absolute top-0 w-0.5 bg-red-200 origin-center"
+                    style={{
+                      height: "150%",
+                      transform: "rotate(-22.5deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="absolute top-0 w-0.5 bg-red-200 origin-center"
+                    style={{
+                      height: "150%",
+                      transform: "rotate(22.5deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="absolute top-0 w-0.5 bg-red-200 origin-center"
+                    style={{
+                      height: "150%",
+                      transform: "rotate(67.5deg)",
+                    }}
+                  ></div>
+                  <div
+                    className="absolute top-0 w-0.5 bg-red-200 origin-center"
+                    style={{
+                      height: "150%",
+                      transform: "rotate(-67.5deg)",
+                    }}
+                  ></div>
+                </div>
                 <div
                   className="ticker absolute left-0 w-1/2 h-full rounded-l-full origin-right bg-red-700"
                   style={{
@@ -292,11 +354,11 @@ class App extends Component {
                   style={{
                     backgroundColor: `${percentage > 50 ? "" : "#fca5a5"}`,
                     transform: `rotate(-${percentage > 50 ? 0 : 180}deg)`,
-                    zIndex: 1,
+                    zIndex: 0,
                   }}
                 ></div>
                 <div
-                  className="absolute w-full z-10 text-white font-thin opacity-60"
+                  className="absolute w-full z-1 text-white font-thin opacity-60"
                   style={{
                     fontSize: "min(5em, 10vmin)",
                     top: "calc(50% - 0.5em)",
